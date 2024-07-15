@@ -6,18 +6,23 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.Button
 import android.widget.EditText
+import android.widget.RadioGroup
 import android.widget.Spinner
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.amdocsapp.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity(), View.OnFocusChangeListener,
-    AdapterView.OnItemSelectedListener {
-    lateinit var cancelBtn:Button
-    lateinit var emailEt:EditText
-    lateinit var spinnerLangs:Spinner
+    AdapterView.OnItemSelectedListener, RadioGroup.OnCheckedChangeListener {
+
+    private lateinit var binding: ActivityMainBinding
+
+    /* lateinit var cancelBtn:Button
+     lateinit var emailEt:EditText
+     lateinit var spinnerLangs:Spinner*/
 
     //var TAG = "MainActivity"
     var TAG = MainActivity::class.java.simpleName
@@ -25,25 +30,35 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)   //inflation
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+        //setContentView(R.layout.activity_main)   //inflation
         Log.i(TAG,"oncreate")
 
-        emailEt = findViewById(R.id.etEmail)
-        spinnerLangs = findViewById(R.id.languagesSpinner)
+      /*  emailEt = findViewById(R.id.etEmail)
+        spinnerLangs = findViewById(R.id.languagesSpinner)*/
     //dive into the activity_main xml file which you inffflated recently and find a view in
     }
 
     override fun onStart() {
         super.onStart()
         Log.v(TAG,"onstart")
-        emailEt.setOnFocusChangeListener(this);
-        spinnerLangs.onItemSelectedListener = this
+        binding.etEmail.setOnFocusChangeListener(this)
+        binding.languagesSpinner.onItemSelectedListener = this
+        binding.btnCancel.setOnClickListener{
+            Log.i(TAG,"cancel btn clicked")
+        }
+
+        binding.radioGroup.setOnCheckedChangeListener(this)
+       /* binding.emailEt.setOnFocusChangeListener(this);
+        binding.spinnerLangs.onItemSelectedListener = this
 
         cancelBtn = findViewById(R.id.btnCancel)
         cancelBtn.setOnClickListener(View.OnClickListener {
             Log.i(TAG,"cancel btn clicked")
 
-        })
+        })*/
     }
 
 
@@ -71,7 +86,17 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener,
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
-        TODO("Not yet implemented")
+    }
+
+    override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
+        if (checkedId == R.id.maleRb){
+            Log.i(TAG,"male selected")
+
+        }
+        else{
+            Log.i(TAG,"female selected")
+
+        }
     }
 
 
