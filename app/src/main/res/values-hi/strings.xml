@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="enter_email_hint">ईमेल दर्ज करें</string>
+    <string name="enter_password_hint">पास वर्ड दर्ज करें</string>
+    <string name="male_rb">पुरुष</string>
+</resources>
