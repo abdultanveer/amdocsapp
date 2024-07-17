@@ -11,6 +11,7 @@ public class CalculatorTest extends TestCase {
         calculator = new Calculator();
     }
 
+
     public void testAdd() {
         int expected = 40;
         int actual = calculator.add(10,20);

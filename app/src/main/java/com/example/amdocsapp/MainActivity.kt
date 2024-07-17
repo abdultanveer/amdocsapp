@@ -82,6 +82,15 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener,
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.btnLogin.setOnClickListener{
+            var data = binding.etPassword.text.toString()
+            binding.tvtest.setText(data)
+        }
+    }
+
+
     fun add(a:Int,b:Int):Int{
         return a + b
     }
