@@ -3,6 +3,7 @@ package com.example.amdocsapp
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.AlarmClock
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -58,12 +59,17 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener,
                 var rIntent = Intent(this,RecyclerActivity::class.java)
                 var data = binding.etEmail.text.toString()
                 rIntent.putExtra("ekey",data)
-                startActivity(rIntent)
+                //startActivity(rIntent)
+                startActivityForResult(rIntent,123)
+               // sendBroadcast(rIntent)
             }
 
         binding.btnDial.setOnClickListener{
             var dIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:8976543"))
             startActivity(dIntent)
+        }
+        binding.btnAlarm.setOnClickListener{
+            createAlarm("amdocs",10,32)
         }
     }
 
@@ -102,6 +108,26 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener,
         else{
             Log.i(TAG,"female selected")
 
+        }
+    }
+
+    fun createAlarm(message: String, hour: Int, minutes: Int) {
+        val intent = Intent(AlarmClock.ACTION_SET_ALARM).apply {
+            putExtra(AlarmClock.EXTRA_MESSAGE, message)
+            putExtra(AlarmClock.EXTRA_HOUR, hour)
+            putExtra(AlarmClock.EXTRA_MINUTES, minutes)
+        }
+      //  if (intent.resolveActivity(packageManager) != null) {
+        // checking if there's anny app which can serve my intent to set alarm
+            startActivity(intent)
+       // }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && requestCode == 123){
+            var receivedData = data?.extras?.getString("conPh")
+            binding.tvResult.text = receivedData
         }
     }
 

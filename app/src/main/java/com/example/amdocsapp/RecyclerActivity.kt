@@ -34,5 +34,13 @@ class RecyclerActivity : AppCompatActivity() {
         super.onStart()
         var dataReceived = intent.extras?.getString("ekey")
         binding.tvData?.text = dataReceived
+
+        binding.btnSelect?.setOnClickListener{
+            var contactPhoto = binding.etContact?.text.toString();
+            var resIntent = Intent()
+            resIntent.putExtra("conPh",contactPhoto)
+            setResult(RESULT_OK,resIntent)
+            finish()
+        }
     }
 }
