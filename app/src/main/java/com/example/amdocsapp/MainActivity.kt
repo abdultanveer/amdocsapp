@@ -7,14 +7,9 @@ import android.provider.AlarmClock
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
-import android.widget.Button
-import android.widget.EditText
 import android.widget.RadioGroup
-import android.widget.Spinner
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.amdocsapp.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -71,6 +66,24 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener,
         binding.btnAlarm.setOnClickListener{
             createAlarm("amdocs",10,32)
         }
+        binding.btnFaq.setOnClickListener {
+            val url = "https://en.wikipedia.org/wiki/FAQ"
+            val i = Intent(Intent.ACTION_VIEW,Uri.parse(url))
+           // i.setData(Uri.parse(url))
+            repeat(5) {
+                var c = 10 + 20 * 30
+                c++
+            }
+
+            add(10,30)
+
+          //  throw NullPointerException("demo crash")
+            startActivity(i)
+        }
+    }
+
+    fun add(a:Int,b:Int):Int{
+        return a + b
     }
 
 
