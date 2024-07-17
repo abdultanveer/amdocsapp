@@ -27,4 +27,10 @@ class RecyclerActivity : AppCompatActivity() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = myadapter
     }
+
+    override fun onStart() {
+        super.onStart()
+        var dataReceived = intent.extras?.getString("ekey")
+        binding.tvData?.text = dataReceived
+    }
 }

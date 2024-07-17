@@ -1,5 +1,6 @@
 package com.example.amdocsapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -51,14 +52,13 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener,
         }
 
         binding.radioGroup.setOnCheckedChangeListener(this)
-       /* binding.emailEt.setOnFocusChangeListener(this);
-        binding.spinnerLangs.onItemSelectedListener = this
 
-        cancelBtn = findViewById(R.id.btnCancel)
-        cancelBtn.setOnClickListener(View.OnClickListener {
-            Log.i(TAG,"cancel btn clicked")
-
-        })*/
+            binding.btnR.setOnClickListener{
+                var rIntent = Intent(this,RecyclerActivity::class.java)
+                var data = binding.etEmail.text.toString()
+                rIntent.putExtra("ekey",data)
+                startActivity(rIntent)
+            }
     }
 
 
