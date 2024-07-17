@@ -1,6 +1,7 @@
 package com.example.amdocsapp
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -59,6 +60,11 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener,
                 rIntent.putExtra("ekey",data)
                 startActivity(rIntent)
             }
+
+        binding.btnDial.setOnClickListener{
+            var dIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:8976543"))
+            startActivity(dIntent)
+        }
     }
 
 
