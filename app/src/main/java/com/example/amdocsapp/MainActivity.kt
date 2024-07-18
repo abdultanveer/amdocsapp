@@ -17,7 +17,11 @@ import com.example.amdocsapp.database.ItemDao
 import com.example.amdocsapp.database.ItemRoomDatabase
 import com.example.amdocsapp.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.last
+import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), View.OnFocusChangeListener,
@@ -47,6 +51,16 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener,
         binding.btnLogin.setOnClickListener{
             insertItemDb()
         }
+        binding.btnCancel.setOnClickListener {
+            retreiveDb()
+        }
+    }
+
+    private fun retreiveDb() {
+        GlobalScope.launch(Dispatchers.Main) {
+           var item = dao.getItem(11).first()
+            binding.tvDb.text = item.itemName
+        }
     }
 
     private fun insertItemDb() {
@@ -61,9 +75,7 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener,
         Log.v(TAG,"onstart")
         binding.etEmail.setOnFocusChangeListener(this)
         binding.languagesSpinner.onItemSelectedListener = this
-        binding.btnCancel.setOnClickListener{
-            Log.i(TAG,"cancel btn clicked")
-        }
+
 
         binding.radioGroup.setOnCheckedChangeListener(this)
        /* binding.emailEt.setOnFocusChangeListener(this);
