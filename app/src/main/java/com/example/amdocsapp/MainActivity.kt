@@ -12,8 +12,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.amdocsapp.database.Item
+import com.example.amdocsapp.database.ItemDao
+import com.example.amdocsapp.database.ItemRoomDatabase
 import com.example.amdocsapp.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), View.OnFocusChangeListener,
     AdapterView.OnItemSelectedListener, RadioGroup.OnCheckedChangeListener {
@@ -27,18 +32,28 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener,
     //var TAG = "MainActivity"
     var TAG = MainActivity::class.java.simpleName
 
+    lateinit var dao: ItemDao
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        //setContentView(R.layout.activity_main)   //inflation
-        Log.i(TAG,"oncreate")
+        var  database = ItemRoomDatabase.getDatabase(this)
+        dao = database.itemDao()
 
-      /*  emailEt = findViewById(R.id.etEmail)
-        spinnerLangs = findViewById(R.id.languagesSpinner)*/
-    //dive into the activity_main xml file which you inffflated recently and find a view in
+        binding.btnLogin.setOnClickListener{
+            insertItemDb()
+        }
+    }
+
+    private fun insertItemDb() {
+        GlobalScope.launch {
+            var gItem = Item(11,"fruits",12.99,12)
+            dao.insert(gItem)
+        }
     }
 
     override fun onStart() {

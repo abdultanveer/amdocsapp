@@ -1,4 +1,4 @@
-package com.example.amdocsapp
+package com.example.amdocsapp.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
