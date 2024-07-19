@@ -7,6 +7,7 @@ import android.widget.AdapterView
 import android.widget.RadioGroup
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.amdocsapp.database.Item
 import com.example.amdocsapp.database.ItemDao
@@ -36,7 +37,7 @@ lateinit var viewModel:MainViewModel
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-
+        viewModel._seconds.observe(this, secsObserver); //plz inform this observer when secs change
         val view = binding.root
         setContentView(view)
         var  database = ItemRoomDatabase.getDatabase(this)
@@ -48,7 +49,18 @@ lateinit var viewModel:MainViewModel
         binding.btnCancel.setOnClickListener {
             retreiveDb()
         }
+
+
     }
+
+    var secsObserver : Observer<Int> = object :Observer<Int>{
+        override fun onChanged(value: Int) {
+            //receiving the update/notification
+            binding.tvDb.setText(value.toString())
+        }
+    }
+
+
 
     private fun retreiveDb() {
         GlobalScope.launch(Dispatchers.Main) {
