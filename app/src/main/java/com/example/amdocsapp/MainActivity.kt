@@ -4,14 +4,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
-import android.widget.Button
-import android.widget.EditText
 import android.widget.RadioGroup
-import android.widget.Spinner
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import com.example.amdocsapp.database.Item
 import com.example.amdocsapp.database.ItemDao
 import com.example.amdocsapp.database.ItemRoomDatabase
@@ -20,8 +16,6 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.last
-import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), View.OnFocusChangeListener,
@@ -29,25 +23,25 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener,
 
     private lateinit var binding: ActivityMainBinding
 
-    /* lateinit var cancelBtn:Button
-     lateinit var emailEt:EditText
-     lateinit var spinnerLangs:Spinner*/
+
 
     //var TAG = "MainActivity"
     var TAG = MainActivity::class.java.simpleName
 
     lateinit var dao: ItemDao
-
+lateinit var viewModel:MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+
         val view = binding.root
         setContentView(view)
         var  database = ItemRoomDatabase.getDatabase(this)
         dao = database.itemDao()
-
+        binding.tvDb.setText(""+viewModel.dataDbWebservice)
         binding.btnLogin.setOnClickListener{
             insertItemDb()
         }
@@ -78,14 +72,13 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener,
 
 
         binding.radioGroup.setOnCheckedChangeListener(this)
-       /* binding.emailEt.setOnFocusChangeListener(this);
-        binding.spinnerLangs.onItemSelectedListener = this
+        binding.btnCounter.setOnClickListener {
+          /*  dataDbWebservice++
+            binding.tvDb.setText(""+dataDbWebservice)*/
+            viewModel.incrementCounter()
+            binding.tvDb.setText(""+viewModel.dataDbWebservice)
 
-        cancelBtn = findViewById(R.id.btnCancel)
-        cancelBtn.setOnClickListener(View.OnClickListener {
-            Log.i(TAG,"cancel btn clicked")
-
-        })*/
+        }
     }
 
 
