@@ -41,7 +41,7 @@ lateinit var viewModel:MainViewModel
         setContentView(view)
         var  database = ItemRoomDatabase.getDatabase(this)
         dao = database.itemDao()
-        binding.tvDb.setText(""+viewModel.dataDbWebservice)
+                //viewModel.dataDbWebservice)
         binding.btnLogin.setOnClickListener{
             insertItemDb()
         }
@@ -73,11 +73,8 @@ lateinit var viewModel:MainViewModel
 
         binding.radioGroup.setOnCheckedChangeListener(this)
         binding.btnCounter.setOnClickListener {
-          /*  dataDbWebservice++
-            binding.tvDb.setText(""+dataDbWebservice)*/
-            viewModel.incrementCounter()
-            binding.tvDb.setText(""+viewModel.dataDbWebservice)
-
+            viewModel.startTimer()
+            binding.tvDb.setText(""+viewModel._seconds)
         }
     }
 
