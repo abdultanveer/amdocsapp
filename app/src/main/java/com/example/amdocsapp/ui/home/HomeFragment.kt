@@ -11,6 +11,7 @@ import com.example.amdocsapp.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
+  lateinit  var homeViewModel:HomeViewModel
     private var _binding: FragmentHomeBinding? = null
 
     // This property is only valid between onCreateView and
@@ -22,7 +23,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
+         homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -34,6 +35,14 @@ class HomeFragment : Fragment() {
         }
         return root
     }
+
+    override fun onStart() {
+        super.onStart()
+        binding.btnDash.setOnClickListener {
+            homeViewModel.getMarsPhotos()
+        }
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
