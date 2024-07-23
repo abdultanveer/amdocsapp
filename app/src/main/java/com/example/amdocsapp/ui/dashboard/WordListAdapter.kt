@@ -3,10 +3,12 @@ package com.example.amdocsapp.ui.dashboard
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.amdocsapp.R
 import com.example.amdocsapp.network.MarsPhoto
 
@@ -23,9 +25,11 @@ class WordListAdapter : ListAdapter<MarsPhoto, WordListAdapter.WordViewHolder>(W
 
     class WordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val wordItemView: TextView = itemView.findViewById(R.id.textView)
+        private val wordImageView: ImageView = itemView.findViewById(R.id.imageView_ListItem)
 
         fun bind(text: String?) {
             wordItemView.text = text
+            wordImageView.load(text)
         }
 
         companion object {
