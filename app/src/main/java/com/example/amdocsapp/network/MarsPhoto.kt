@@ -6,5 +6,5 @@ data class MarsPhoto(
   val  id:String,
 
   @Json(name = "img_src")
-  val  imgSrc:String
+  var imgSrc:String
 )
