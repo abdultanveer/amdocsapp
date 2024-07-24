@@ -23,7 +23,7 @@ public class SharedPrefModule {
         return  mContext;
     }
 
-    @Singleton
+
     @Provides   //patrick provides sharedprefs object
     SharedPreferences provideSharedPrefs(){
         return PreferenceManager.getDefaultSharedPreferences(mContext);

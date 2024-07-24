@@ -57,10 +57,16 @@ dependencies {
     implementation(libs.converter.moshi)
     implementation(libs.coil)
     //dagger dependencies
-    implementation(libs.dagger.compiler)
-    implementation(libs.dagger.android.processor)
+    annotationProcessor(libs.dagger.compiler)
+    annotationProcessor(libs.dagger.android.processor)
     implementation(libs.dagger.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+  /*  implementation ("com.google.dagger:dagger-android:2.38.1")
+    //  implementation ("'com.google.dagger:dagger-android-support:2.38.1")// if you use the support libraries
+    annotationProcessor ("com.google.dagger:dagger-android-processor:2.38.1")
+    annotationProcessor ("com.google.dagger:dagger-compiler:2.38.1")*/
+
 }
