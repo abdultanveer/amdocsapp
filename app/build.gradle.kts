@@ -56,6 +56,10 @@ dependencies {
     implementation(libs.moshi.kotlin)
     implementation(libs.converter.moshi)
     implementation(libs.coil)
+    //dagger dependencies
+    implementation(libs.dagger.compiler)
+    implementation(libs.dagger.android.processor)
+    implementation(libs.dagger.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
