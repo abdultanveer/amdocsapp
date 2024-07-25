@@ -1,7 +1,11 @@
 package com.example.amdocsapp
 
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Button
@@ -61,6 +65,17 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener,
         })*/
     }
 
+    override fun onResume() {
+        super.onResume()
+        var smsIntent = Intent("my.action.string")
+       // sendBroadcast(smsIntent,"only.has.password")
+       // registerReceiver(SmsReceiver(), IntentFilter("android.provider.Telephony.SMS_RECEIVED"))
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+      //  unregisterReceiver()
+    }
 
     fun clickHandler(view: View) {
         //View myView = new View()
@@ -97,6 +112,22 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener,
             Log.i(TAG,"female selected")
 
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+         super.onCreateOptionsMenu(menu)
+        var myInflater = menuInflater
+        myInflater.inflate(R.menu.main_menu,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+         super.onOptionsItemSelected(item)
+        when(item.itemId){
+            R.id.mi_logout -> {Log.i(TAG,"logging out")}
+            R.id.mi_settings -> {Log.i(TAG,"opening settings")}
+        }
+        return true
     }
 
 
