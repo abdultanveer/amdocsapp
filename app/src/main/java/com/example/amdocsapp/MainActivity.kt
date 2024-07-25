@@ -1,7 +1,12 @@
 package com.example.amdocsapp
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.ContextMenu
@@ -15,6 +20,7 @@ import android.widget.RadioGroup
 import android.widget.Spinner
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.amdocsapp.databinding.ActivityMainBinding
@@ -54,18 +60,52 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener,
         binding.etEmail.setOnFocusChangeListener(this)
         binding.languagesSpinner.onItemSelectedListener = this
         binding.btnCancel.setOnClickListener{
+
+            createNotification()
             Log.i(TAG,"cancel btn clicked")
         }
 
         binding.radioGroup.setOnCheckedChangeListener(this)
-       /* binding.emailEt.setOnFocusChangeListener(this);
-        binding.spinnerLangs.onItemSelectedListener = this
 
-        cancelBtn = findViewById(R.id.btnCancel)
-        cancelBtn.setOnClickListener(View.OnClickListener {
-            Log.i(TAG,"cancel btn clicked")
+    }
 
-        })*/
+    fun createNotification(){
+        createNotificationChannel()
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+
+
+        var builder = NotificationCompat.Builder(this, "CHANNEL_ID")
+            .setSmallIcon(R.drawable.baseline_add_box_24)
+            .setContentTitle("textTitle")
+            .setContentText("textContent")
+            .setContentIntent(pendingIntent)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        val notificationManager: NotificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        notificationManager.notify(123,builder.build())
+
+    }
+
+    private fun createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is not in the Support Library.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "channelname"
+            val descriptionText = "channel description"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel("CHANNEL_ID", name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system.
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 
     override fun onResume() {
