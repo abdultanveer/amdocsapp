@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
+import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -39,6 +40,8 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener,
         setContentView(view)
         //setContentView(R.layout.activity_main)   //inflation
         Log.i(TAG,"oncreate")
+
+        registerForContextMenu(binding.btnLogin)
 
       /*  emailEt = findViewById(R.id.etEmail)
         spinnerLangs = findViewById(R.id.languagesSpinner)*/
@@ -123,6 +126,26 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener,
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
          super.onOptionsItemSelected(item)
+        when(item.itemId){
+            R.id.mi_logout -> {Log.i(TAG,"logging out")}
+            R.id.mi_settings -> {Log.i(TAG,"opening settings")}
+        }
+        return true
+    }
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu?,
+        v: View?,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        var myInflater = menuInflater
+        myInflater.inflate(R.menu.main_menu,menu)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+         super.onContextItemSelected(item)
+
         when(item.itemId){
             R.id.mi_logout -> {Log.i(TAG,"logging out")}
             R.id.mi_settings -> {Log.i(TAG,"opening settings")}
